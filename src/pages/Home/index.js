@@ -11,7 +11,7 @@ import { CardContext } from '../../context/cardContext'
 
 export default function Home() {
 
-  const {card} = useContext(CardContext)
+  const {card, addItemCard} = useContext(CardContext)
 
   const navigation = useNavigation()
   const [products, setProducts] = useState([
@@ -41,6 +41,10 @@ export default function Home() {
       price: 6.00
     }
   ])
+
+  const handleAddCart = (item) => {
+    addItemCard(item)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +76,9 @@ export default function Home() {
         style={styles.list}
         data={products}
         keyExtractor={item => String(item.id)}
-        renderItem={({item}) => <Products data={item}/>}
+        renderItem={
+          ({item}) => <Products data={item} addToCart={() => handleAddCart(item)}/>
+        }
       />
 
     </SafeAreaView>
